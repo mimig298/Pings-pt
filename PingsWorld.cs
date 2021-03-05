@@ -71,7 +71,12 @@ namespace Pings
 				if (same.PlayerUUID == ping.PlayerUUID)
 				{
 					Pings.Remove(same);
-					Main.NewText("Removed ping.", Color.DeepPink);
+
+					if (player.whoAmI == Main.myPlayer)
+					{
+						Main.NewText("Removed ping.", Color.DeepPink);
+					}
+
 					return false;
 				}
 				else
