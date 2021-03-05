@@ -2,7 +2,7 @@
 
 ![Icon](https://raw.githubusercontent.com/direwolf420/Pings/master/icon.png)
 
-Terraria Forum link: [Here]()
+Terraria Forum link: [Here](https://forums.terraria.org/index.php?threads/pings-create-point-of-interest-markers.103777/)
 
 Enemies, resources, and other interesting objects can be marked using a bindable hotkey, creating a "point of interest" (referred to as "ping").
 The locations of marked creatures and objects are visible to everyone on the world map.
