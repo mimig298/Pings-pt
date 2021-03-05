@@ -1,0 +1,5 @@
+displayName = Pings
+author = direwolf420
+version = 0.1
+includePDB = true
+buildIgnore = *.csproj, *.sln, *.user, *.md, obj\*, bin\*, .vs\*, .git\*, .gitignore, .editorconfig
