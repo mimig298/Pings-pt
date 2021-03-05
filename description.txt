@@ -6,6 +6,8 @@ Pings can be seen through walls, making it a useful tool for alerting teammates 
 
 Pinging NPCs has the benefit of stopping them from despawning if no players are in range.
 
+Complete multiplayer support!
+
 Quick Guide:
 * Press and release the hotkey to create a ping
 * Hold the hotkey for a second to also notify everyone through the in-game chat
