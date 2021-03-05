@@ -1,6 +1,6 @@
 # Pings
 
-![Icon]()
+![Icon](https://raw.githubusercontent.com/direwolf420/Pings/master/icon.png)
 
 Terraria Forum link: [Here]()
 
