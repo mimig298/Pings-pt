@@ -42,27 +42,25 @@ namespace Pings
 					KeyHoldTimer++;
 					if (KeyHoldTimer > KeyHoldTimerMax)
 					{
-						int amount = 10;
-
-						for (int i = 0; i < amount; i++)
-						{
-							Vector2 vector = -Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / amount)) * 10f;
-
-							Dust dust = Dust.NewDustDirect(Main.MouseWorld, 0, 0, DustID.Fire);
-							dust.noGravity = true;
-							dust.noLight = true;
-							dust.position = Main.MouseWorld + vector;
-							dust.velocity = vector.SafeNormalize(Vector2.UnitY) * 0.5f;
-						}
+						PingsWorld.SpawnDustGoingOutwards(Main.MouseWorld, 10f, DustID.Fire, 10, 0.5f);
 
 						Main.PlaySound(SoundID.MaxMana);
 						notifyAfterHeld = true;
 					}
 				}
+
+				Vector2 size = new Vector2(32);
+				float distance = 0.8f * Math.Min(KeyHoldTimer / (float)KeyHoldTimerMax, 1f);
+				PingsWorld.SpawnRotatingDust(Main.MouseWorld - size / 2, distance, size, 204);
+
 			}
 			else if (hotkey.JustReleased)
 			{
 				notify = notifyAfterHeld;
+			}
+			else if (hotkey.JustPressed)
+			{
+				Main.PlaySound(SoundID.MenuOpen);
 			}
 			else
 			{

@@ -234,6 +234,7 @@ namespace Pings
 			foreach (var ping in Pings)
 			{
 				int dustType = 204;
+				float distanceFromCenter = ping.DecayTimer <= Ping.AlphaTimerStart ? (ping.DecayTimer / (float)Ping.AlphaTimerStart) : 1f;
 				if (Main.netMode == NetmodeID.MultiplayerClient && ping.Player?.whoAmI != Main.myPlayer)
 				{
 					dustType = DustID.Fire;
@@ -245,7 +246,7 @@ namespace Pings
 					Vector2 size = ping.TileSize.ToVector2() * 16;
 					if (screenRect.Intersects(new Rectangle((int)worldPos.X, (int)worldPos.Y, (int)size.X, (int)size.Y)))
 					{
-						SpawnDust(ping, worldPos, size, dustType);
+						SpawnRotatingDust(worldPos, distanceFromCenter, size, dustType);
 					}
 				}
 				else if (ping.PingType == PingType.NPC)
@@ -253,7 +254,7 @@ namespace Pings
 					NPC npc = Main.npc[ping.WhoAmI];
 					if (screenRect.Intersects(npc.Hitbox))
 					{
-						SpawnDust(ping, npc.position + new Vector2(0f, npc.gfxOffY), npc.Size, dustType);
+						SpawnRotatingDust(npc.position + new Vector2(0f, npc.gfxOffY), distanceFromCenter, npc.Size, dustType);
 					}
 				}
 				else if (ping.PingType == PingType.Item)
@@ -261,7 +262,7 @@ namespace Pings
 					Item item = Main.item[ping.WhoAmI];
 					if (screenRect.Intersects(item.Hitbox))
 					{
-						SpawnDust(ping, item.position, item.Size, dustType);
+						SpawnRotatingDust(item.position, distanceFromCenter, item.Size, dustType);
 					}
 				}
 				else if (ping.PingType == PingType.SelfPlayer)
@@ -271,7 +272,7 @@ namespace Pings
 					worldPos -= size / 2;
 					if (screenRect.Contains(worldPos.ToPoint()))
 					{
-						SpawnDust(ping, worldPos, size, dustType);
+						SpawnRotatingDust(worldPos, distanceFromCenter, size, dustType);
 					}
 				}
 			}
@@ -295,7 +296,7 @@ namespace Pings
 			}
 		}
 
-		internal static void SpawnDust(Ping ping, Vector2 pos, Vector2? size = null, int type = 204)
+		internal static void SpawnRotatingDust(Vector2 pos, float distanceFromCenter, Vector2? size = null, int type = 204)
 		{
 			Dust dust;
 
@@ -321,7 +322,7 @@ namespace Pings
 					dust = Dust.NewDustDirect(center, 0, 0, type);
 					dust.noGravity = true;
 					dust.noLight = true;
-					dust.position = center + vector * (ping.DecayTimer <= Ping.AlphaTimerStart ? (ping.DecayTimer / (float)Ping.AlphaTimerStart) : 1f);
+					dust.position = center + vector * distanceFromCenter;
 					dust.velocity *= 0f;
 				}
 			}
@@ -331,6 +332,20 @@ namespace Pings
 				dust.noGravity = true;
 				dust.noLight = true;
 				dust.velocity *= 0.1f;
+			}
+		}
+
+		public static void SpawnDustGoingOutwards(Vector2 center, float distanceFromCenter, int type, int amount, float speed)
+		{
+			for (int i = 0; i < amount; i++)
+			{
+				Vector2 vector = -Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / amount)) * distanceFromCenter;
+
+				Dust dust = Dust.NewDustDirect(center, 0, 0, type);
+				dust.noGravity = true;
+				dust.noLight = true;
+				dust.position = center + vector;
+				dust.velocity = vector.SafeNormalize(Vector2.UnitY) * speed;
 			}
 		}
 
