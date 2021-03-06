@@ -35,6 +35,12 @@ namespace Pings
 
 			bool? notify = null;
 			ModHotKey hotkey = PingsMod.PingHotKey;
+
+			if (hotkey.JustPressed)
+			{
+				Main.PlaySound(SoundID.MenuOpen);
+			}
+
 			if (hotkey.Current)
 			{
 				if (!notifyAfterHeld)
@@ -51,16 +57,17 @@ namespace Pings
 
 				Vector2 size = new Vector2(32);
 				float distance = 0.8f * Math.Min(KeyHoldTimer / (float)KeyHoldTimerMax, 1f);
-				PingsWorld.SpawnRotatingDust(Main.MouseWorld - size / 2, distance, size, 204);
+				int type = 204;
+				if (PingCooldownTimer > 0)
+				{
+					type = 60;
+				}
+				PingsWorld.SpawnRotatingDust(Main.MouseWorld - size / 2, distance, size, type);
 
 			}
 			else if (hotkey.JustReleased)
 			{
 				notify = notifyAfterHeld;
-			}
-			else if (hotkey.JustPressed)
-			{
-				Main.PlaySound(SoundID.MenuOpen);
 			}
 			else
 			{
