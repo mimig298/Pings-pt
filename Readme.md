@@ -10,7 +10,7 @@ Pings can be seen through walls, making it a useful tool for alerting teammates 
 
 Pinging NPCs has the benefit of stopping them from despawning if no players are in range.
 
-Complete multiplayer support!
+The perfect mod for multiplayer!
 
 Quick Guide:
 * Press and release the hotkey to create a ping
@@ -27,3 +27,10 @@ Duration, limit and cooldown of pings are configurable in the config.
 
 Credits:
 * _hamstar_ for map draw code
+
+Changelogs:
+v0.1.0.2;
+- Improved feedback for hotkey
+
+v0.1.0.1:
+- Initial release
