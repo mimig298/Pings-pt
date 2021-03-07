@@ -29,8 +29,13 @@ Credits:
 * _hamstar_ for map draw code
 
 Changelogs:
-v0.1.0.2;
+v0.1.1:
+- Added edit protection for the server config
+- You can now only see pings from players that are teamless or on the same team
+
+v0.1.0.2:
 - Improved feedback for hotkey
+- Pinged NPCs will properly despawn if they flee (bosses during daytime)
 
 v0.1.0.1:
 - Initial release

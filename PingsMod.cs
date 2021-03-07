@@ -106,9 +106,12 @@ namespace Pings
 
 			foreach (var ping in PingsWorld.Pings)
 			{
-				bool isTarget = ping == targetPing;
+				if (ping.IsVisible())
+				{
+					bool isTarget = ping == targetPing;
 
-				this.DrawPingOnFullscreenMap(ping, isTarget, ref mouseText);
+					DrawPingOnFullscreenMap(ping, isTarget, ref mouseText);
+				}
 			}
 		}
 

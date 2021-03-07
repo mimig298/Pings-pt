@@ -233,6 +233,11 @@ namespace Pings
 
 			foreach (var ping in Pings)
 			{
+				if (!ping.IsVisible())
+				{
+					continue;
+				}
+
 				int dustType = 204;
 				float distanceFromCenter = ping.DecayTimer <= Ping.AlphaTimerStart ? (ping.DecayTimer / (float)Ping.AlphaTimerStart) : 1f;
 				if (Main.netMode == NetmodeID.MultiplayerClient && ping.Player?.whoAmI != Main.myPlayer)
@@ -283,7 +288,7 @@ namespace Pings
 			Point point = new Point(i, j);
 			foreach (var ping in Pings)
 			{
-				if (ping.IsTile)
+				if (ping.IsVisible() && ping.IsTile)
 				{
 					Tile tile = Framing.GetTileSafely(point);
 					Rectangle rect = ping.TileDimensions;
@@ -292,6 +297,18 @@ namespace Pings
 						ModifyColor(ping, ref drawColor);
 						break;
 					}
+				}
+			}
+		}
+
+		internal static void HighlightNPC(NPC npc, ref Color drawColor)
+		{
+			foreach (var ping in Pings)
+			{
+				if (ping.IsVisible() && ping.HasWhoAmI && ping.PingType == PingType.NPC && npc.whoAmI == ping.WhoAmI && npc.type == ping.Type)
+				{
+					ModifyColor(ping, ref drawColor);
+					break;
 				}
 			}
 		}
@@ -346,18 +363,6 @@ namespace Pings
 				dust.noLight = true;
 				dust.position = center + vector;
 				dust.velocity = vector.SafeNormalize(Vector2.UnitY) * speed;
-			}
-		}
-
-		internal static void HighlightNPC(NPC npc, ref Color drawColor)
-		{
-			foreach (var ping in Pings)
-			{
-				if (ping.HasWhoAmI && ping.PingType == PingType.NPC && npc.whoAmI == ping.WhoAmI && npc.type == ping.Type)
-				{
-					ModifyColor(ping, ref drawColor);
-					break;
-				}
 			}
 		}
 

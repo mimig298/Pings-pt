@@ -28,6 +28,8 @@ namespace Pings
 
 		public Player Player
 		{
+			//This will return null for newly joined clients when they try to access this on initially received pings.
+			//Pings will get requested again on join so it might take a second or two for this to return a proper value, but after that it's settled
 			get
 			{
 				if (playerWhoAmI == Main.maxPlayers)
@@ -35,9 +37,10 @@ namespace Pings
 					Player player = PingsPlayer.GetPlayerFromUUID(PlayerUUID);
 					if (player == null)
 					{
+						//PingsMod.Log("Get Player (" + PlayerUUID + "): null", true, true);
 						return null;
 					}
-					//PingsMod.Log("Get Player (" + PlayerUUID + ")", true, true);
+					//PingsMod.Log("Get Player (" + PlayerUUID + "): success", true, true);
 					playerWhoAmI = (byte)player.whoAmI;
 				}
 				return Main.player[playerWhoAmI];
@@ -565,6 +568,12 @@ namespace Pings
 		{
 			DecayTimer = DecayDuration;
 		}
+
+		/// <summary>
+		/// Checks if the local player can see this ping
+		/// </summary>
+		/// <returns>Returns true if the pings owner is teamless or on the same team as the local player</returns>
+		public bool IsVisible() => Player != null && (Player.team == 0 || Main.LocalPlayer.team == Player.team);
 
 		public void NetSend(BinaryWriter writer)
 		{

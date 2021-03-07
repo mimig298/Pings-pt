@@ -13,6 +13,7 @@ namespace Pings.Netcode.Packets
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{
+				//PingsMod.Log("send request", true, true);
 				ModContent.GetInstance<PingsWorld>().NetSend(writer);
 			}
 		}
@@ -25,6 +26,7 @@ namespace Pings.Netcode.Packets
 			}
 			else
 			{
+				//PingsMod.Log("recv request", true, true);
 				ModContent.GetInstance<PingsWorld>().NetReceive(reader);
 			}
 		}
