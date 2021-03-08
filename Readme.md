@@ -35,7 +35,7 @@ v0.1.1:
 
 v0.1.0.2:
 - Improved feedback for hotkey
-- Pinged NPCs will properly despawn if they flee (bosses during daytime)
+- Pinged bosses will properly despawn if they flee
 
 v0.1.0.1:
 - Initial release

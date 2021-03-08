@@ -121,6 +121,12 @@ namespace Pings
 			{
 				bool decayed = ping.DoDecay();
 
+				if (decayed)
+				{
+					toRemove.Add(ping);
+					continue;
+				}
+
 				bool remove = false;
 				bool removeAndSync = false;
 				switch (ping.PingType)
@@ -190,12 +196,12 @@ namespace Pings
 						break;
 				}
 
-				if (decayed || remove)
+				if (remove)
 				{
 					toRemove.Add(ping);
 				}
 
-				if (!decayed && removeAndSync)
+				if (removeAndSync)
 				{
 					toRemoveAndSync.Add(ping);
 				}

@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 namespace Pings
 {
 	//Credit to hamstar for the map draw code
+	//TODO light level check threshold (everything, configurable)
 	public class PingsMod : Mod
 	{
 		public static ModHotKey PingHotKey { internal set; get; }
