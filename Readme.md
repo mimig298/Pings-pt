@@ -5,8 +5,7 @@
 Terraria Forum link: [Here](https://forums.terraria.org/index.php?threads/pings-create-point-of-interest-markers.103777/)
 
 Enemies, resources, and other interesting objects can be marked using a bindable hotkey, creating a "point of interest" (referred to as "ping").
-The locations of marked creatures and objects are visible to everyone on the world map.
-Pings can be seen through walls, making it a useful tool for alerting teammates to the location of enemies or loot.
+The locations of marked creatures and objects are visible in the world and on the world map, making it a useful tool for alerting teammates to the location of enemies or loot.
 
 Pinging NPCs has the benefit of stopping them from despawning if no players are in range.
 
