@@ -255,12 +255,14 @@ namespace Pings
 				if (tile.type < TileID.Count)
 				{
 					text = GetTileName(text, point, tile);
+					text = PingsMod.SplitCapitalString(text);
 				}
 				if (string.IsNullOrEmpty(text))
 				{
 					if (tile.type < TileID.Count)
 					{
 						text = TileID.Search.GetName(tile.type);
+						text = PingsMod.SplitCapitalString(text);
 					}
 					else
 					{

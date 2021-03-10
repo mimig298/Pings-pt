@@ -106,7 +106,7 @@ namespace Pings
 				}
 				else
 				{
-					Main.NewText($"{player.name} marked a rendezvous!", Color.Green);
+					Main.NewText($"{player.name} marked a rendezvous location!", Color.Green);
 				}
 			}
 
