@@ -4,6 +4,8 @@ using Pings.Netcode;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,15 +15,18 @@ namespace Pings
 {
 	//Credit to hamstar for the map draw code
 	//TODO light level check threshold (everything, configurable)
+	//TODO fix whoami regression/ping going invisible when different player joins
 	public class PingsMod : Mod
 	{
 		public static ModHotKey PingHotKey { internal set; get; }
 
 		public static PingsMod Mod { internal set; get; }
 
+		public static HashSet<ushort> Ores { internal set; get; }
+
 		public static HashSet<ushort> GemOres { internal set; get; }
 
-		public static bool IsCluster(ushort type) => type <= TileLoader.TileCount && (TileID.Sets.Ore[type] || GemOres.Contains(type));
+		public static bool IsCluster(ushort type) => type <= TileLoader.TileCount && (TileID.Sets.Ore[type] || Ores.Contains(type) || GemOres.Contains(type));
 
 		public override void Load()
 		{
@@ -34,6 +39,13 @@ namespace Pings
 
 		public override void PostSetupContent()
 		{
+			Ores = new HashSet<ushort>
+			{
+				TileID.DesertFossil,
+				TileID.Silt,
+				TileID.Slush
+			};
+
 			GemOres = new HashSet<ushort>
 			{
 				TileID.Sapphire,
@@ -58,6 +70,7 @@ namespace Pings
 			NetHandler.Unload();
 			Ping.Unload();
 			PingsWorld.Pings = null;
+			Ores = null;
 			GemOres = null;
 			PingHotKey = null;
 		}
@@ -184,7 +197,7 @@ namespace Pings
 
 				string timeText = string.Empty;
 
-				string text = ping.Text;
+				string text = SplitCapitalString(ping.Text);
 
 				if (ping.PingType == PingType.SelfPlayer)
 				{
@@ -482,6 +495,19 @@ namespace Pings
 			{
 				Main.NewText(msg);
 			}
+		}
+
+		private static readonly Regex sWhitespaceRegex = new Regex(@"\s+");
+		private static readonly Regex sSplitStringRegex = new Regex("(?<!^)(?=[A-Z](?![A-Z]|$))");
+		public static string SplitCapitalString(string text)
+		{
+			text = sWhitespaceRegex.Replace(text, "");
+			return SplitCamelCase(text);
+		}
+
+		public static string SplitCamelCase(string input, string delimiter = " ")
+		{
+			return input.Any(char.IsUpper) ? string.Join(delimiter, sSplitStringRegex.Split(input)) : input;
 		}
 	}
 }
