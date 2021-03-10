@@ -29,6 +29,10 @@ Credits:
 * _hamstar_ for map draw code
 
 Changelogs:
+v0.1.1.1:
+- Added Desert Fossil, Silt and Slush to the ore category
+- Improved tile names
+
 v0.1.1:
 - Added edit protection for the server config
 - You can now only see pings from players that are teamless or on the same team
