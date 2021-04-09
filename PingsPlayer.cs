@@ -105,7 +105,10 @@ namespace Pings
 
 		public override void UpdateDead()
 		{
-			HandleHotKey();
+			if (Main.myPlayer == player.whoAmI && Main.netMode != NetmodeID.Server)
+			{
+				HandleHotKey();
+			}
 		}
 
 		public override void ProcessTriggers(TriggersSet triggersSet)

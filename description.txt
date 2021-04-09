@@ -21,10 +21,9 @@ Things you can ping:
 Duration, limit and cooldown of pings are configurable in the config.
 
 Changelogs:
+v0.1.1.2:
+- Fixed a server error when a player dies in multiplayer
+
 v0.1.1.1:
 - Added Desert Fossil, Silt and Slush to the ore category
 - Improved tile names
-
-v0.1.1:
-- Added edit protection for the server config
-- You can now only see pings from players that are teamless or on the same team

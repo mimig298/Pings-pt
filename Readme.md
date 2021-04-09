@@ -28,6 +28,9 @@ Credits:
 * _hamstar_ for map draw code
 
 Changelogs:
+v0.1.1.2:
+- Fixed a server error when a player dies in multiplayer
+
 v0.1.1.1:
 - Added Desert Fossil, Silt and Slush to the ore category
 - Improved tile names
