@@ -24,7 +24,7 @@ namespace Pings.Netcode.Packets
 		public override void Receive(BinaryReader reader, int sender)
 		{
 			Ping ping = Ping.FromNet(reader);
-			bool? success = PingsWorld.AddOrRemove(ping);
+			bool? success = PingsSystem.AddOrRemove(ping);
 
 			//PingsMod.Log($"Recv ping {success}", true, true);
 

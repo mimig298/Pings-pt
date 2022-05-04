@@ -9,7 +9,7 @@ namespace Pings
 	{
 		public override void DrawEffects(NPC npc, ref Color drawColor)
 		{
-			PingsWorld.HighlightNPC(npc, ref drawColor);
+			PingsSystem.HighlightNPC(npc, ref drawColor);
 		}
 
 		public override bool CheckActive(NPC npc)
@@ -26,7 +26,7 @@ namespace Pings
 				return base.CheckActive(npc);
 			}
 
-			bool anyMatchingPing = PingsWorld.Pings.Any(p => p.PingType == PingType.NPC && p.WhoAmI == npc.whoAmI && p.Type == npc.type);
+			bool anyMatchingPing = PingsSystem.Pings.Any(p => p.PingType == PingType.NPC && p.WhoAmI == npc.whoAmI && p.Type == npc.type);
 			return !anyMatchingPing; //If there is a matching ping, return false
 		}
 	}

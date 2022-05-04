@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,9 +17,9 @@ namespace Pings
 {
 	public sealed class Ping //: IComparable<Ping>
 	{
-		public static Dictionary<PingType, Texture2D> DefaultTextures { internal set; get; }
+		public static Dictionary<PingType, Asset<Texture2D>> DefaultTextures { internal set; get; }
 
-		public static Dictionary<string, Texture2D> SpecialTextures { internal set; get; }
+		public static Dictionary<string, Asset<Texture2D>> SpecialTextures { internal set; get; }
 
 		public PingType PingType { internal set; get; }
 
@@ -250,29 +251,29 @@ namespace Pings
 			Point point = worldPos.ToTileCoordinates();
 			Tile tile = Framing.GetTileSafely(point);
 
-			if (tile.active())
+			if (tile.HasTile)
 			{
-				if (tile.type < TileID.Count)
+				if (tile.TileType < TileID.Count)
 				{
 					text = GetTileName(text, point, tile);
 					text = PingsMod.SplitCapitalString(text);
 				}
 				if (string.IsNullOrEmpty(text))
 				{
-					if (tile.type < TileID.Count)
+					if (tile.TileType < TileID.Count)
 					{
-						text = TileID.Search.GetName(tile.type);
+						text = TileID.Search.GetName(tile.TileType);
 						text = PingsMod.SplitCapitalString(text);
 					}
 					else
 					{
-						text = TileLoader.GetTile(tile.type).Name;
+						text = TileLoader.GetTile(tile.TileType).Name;
 					}
 				}
 
 				Rectangle rect;
 				short tileCount = 0;
-				bool isCluster = PingsMod.IsCluster(tile.type);
+				bool isCluster = PingsMod.IsCluster(tile.TileType);
 				if (isCluster)
 				{
 					rect = GetCluster(point, tile, out tileCount);
@@ -298,7 +299,7 @@ namespace Pings
 
 				Ping ping = new Ping(player, pingType, notify)
 				{
-					Type = tile.type,
+					Type = tile.TileType,
 					TileLocation = tileLocation,
 					TileSize = tileSize,
 					TileCount = tileCount,
@@ -316,7 +317,7 @@ namespace Pings
 			//Start by going clockwise at 12 am and add tiles that match the same type to a queue and are not already in the queue
 			//After that, peek the last element of the queue and perform the same
 
-			ushort type = tile.type;
+			ushort type = tile.TileType;
 			Queue<Point> queue = new Queue<Point>();
 			Queue<Point> filled = new Queue<Point>();
 			queue.Enqueue(point);
@@ -346,7 +347,7 @@ namespace Pings
 					int x = checkPoint.X;
 					int y = checkPoint.Y;
 
-					if (WorldGen.InWorld(x, y) && !queue.Contains(checkPoint) && !filled.Contains(checkPoint) && Framing.GetTileSafely(checkPoint) is Tile checkTile && checkTile.active() && checkTile.type == type)
+					if (WorldGen.InWorld(x, y) && !queue.Contains(checkPoint) && !filled.Contains(checkPoint) && Framing.GetTileSafely(checkPoint) is Tile checkTile && checkTile.HasTile && checkTile.TileType == type)
 					{
 						queue.Enqueue(checkPoint);
 					}
@@ -369,16 +370,16 @@ namespace Pings
 
 		private static Rectangle GetMultiTileDimensions(Point point, Tile tile)
 		{
-			var data = TileObjectData.GetTileData(tile.type, 0);
+			var data = TileObjectData.GetTileData(tile.TileType, 0);
 			if (data != null)
 			{
 				//TODO doesnt work with tiles that have wrapped styles (banners)
 				int width = data.Width;
 				int height = data.Height;
 
-				int tilesToLeft = tile.frameX / (data.CoordinateWidth + data.CoordinatePadding) % width;
+				int tilesToLeft = tile.TileFrameX / (data.CoordinateWidth + data.CoordinatePadding) % width;
 
-				int frameY = tile.frameY;
+				int frameY = tile.TileFrameY;
 				int[] accumulatedHeight = new int[height];
 
 				for (int i = 1; i < height; i++)
@@ -421,10 +422,10 @@ namespace Pings
 			{
 				int num101 = mapX;
 				int num102 = mapY;
-				if (tile.frameX % 36 != 0)
+				if (tile.TileFrameX % 36 != 0)
 					num101--;
 
-				if (tile.frameY % 36 != 0)
+				if (tile.TileFrameY % 36 != 0)
 					num102--;
 
 				text = DrawMap_FindChestName(chestType, tile, num101, num102);
@@ -433,10 +434,10 @@ namespace Pings
 			{
 				int num103 = mapX;
 				int num104 = mapY;
-				if (tile.frameX % 36 != 0)
+				if (tile.TileFrameX % 36 != 0)
 					num103--;
 
-				if (tile.frameY % 36 != 0)
+				if (tile.TileFrameY % 36 != 0)
 					num104--;
 
 				text = DrawMap_FindChestName(chestType2, tile, num103, num104);
@@ -445,25 +446,25 @@ namespace Pings
 			{
 				int num105 = mapX;
 				int num106 = mapY;
-				if (tile.frameX % 36 != 0)
+				if (tile.TileFrameX % 36 != 0)
 					num105--;
 
-				if (tile.frameY % 36 != 0)
+				if (tile.TileFrameY % 36 != 0)
 					num106--;
 
-				text = chestType[tile.frameX / 36].Value;
+				text = chestType[tile.TileFrameX / 36].Value;
 			}
 			else if (type >= fakeContainers2LU && type < fakeContainers2LU + containers2Counts)
 			{
 				int num107 = mapX;
 				int num108 = mapY;
-				if (tile.frameX % 36 != 0)
+				if (tile.TileFrameX % 36 != 0)
 					num107--;
 
-				if (tile.frameY % 36 != 0)
+				if (tile.TileFrameY % 36 != 0)
 					num108--;
 
-				text = chestType2[tile.frameX / 36].Value;
+				text = chestType2[tile.TileFrameX / 36].Value;
 			}
 			else if (type >= dressersLU && type < dressersLU + dressersCounts)
 			{
@@ -472,12 +473,12 @@ namespace Pings
 				if (tile5 != null)
 				{
 					int num109 = mapY;
-					int x2 = mapX - tile5.frameX % 54 / 18;
-					if (tile5.frameY % 36 != 0)
+					int x2 = mapX - tile5.TileFrameX % 54 / 18;
+					if (tile5.TileFrameY % 36 != 0)
 						num109--;
 
 					int num110 = Chest.FindChest(x2, num109);
-					text = ((num110 < 0) ? Lang.dresserType[0].Value : ((!(Main.chest[num110].name != "")) ? Lang.dresserType[tile5.frameX / 54].Value : (Lang.dresserType[tile5.frameX / 54].Value + ": " + Main.chest[num110].name)));
+					text = ((num110 < 0) ? Lang.dresserType[0].Value : ((!(Main.chest[num110].name != "")) ? Lang.dresserType[tile5.TileFrameX / 54].Value : (Lang.dresserType[tile5.TileFrameX / 54].Value + ": " + Main.chest[num110].name)));
 				}
 			}
 			else
@@ -495,21 +496,21 @@ namespace Pings
 				return chestNames[0].Value;
 
 			if (Main.chest[num].name != "")
-				return string.Concat(chestNames[chestTile.frameX / fullTileWidth], ": ", Main.chest[num].name);
+				return string.Concat(chestNames[chestTile.TileFrameX / fullTileWidth], ": ", Main.chest[num].name);
 
-			return chestNames[chestTile.frameX / fullTileWidth].Value;
+			return chestNames[chestTile.TileFrameX / fullTileWidth].Value;
 		}
 
 		internal const string pre = "Pings/Textures/";
 
-		private static Texture2D GetTexture(string name) => ModContent.GetTexture($"{pre}{name}");
+		private static Asset<Texture2D> GetTexture(string name) => ModContent.Request<Texture2D>($"{pre}{name}");
 
 		internal static void Load()
 		{
 			if (!Main.dedServ)
 			{
-				DefaultTextures = new Dictionary<PingType, Texture2D>();
-				SpecialTextures = new Dictionary<string, Texture2D>();
+				DefaultTextures = new Dictionary<PingType, Asset<Texture2D>>();
+				SpecialTextures = new Dictionary<string, Asset<Texture2D>>();
 
 				DefaultTextures[PingType.None] = GetTexture("Empty");
 

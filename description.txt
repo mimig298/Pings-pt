@@ -21,9 +21,9 @@ Things you can ping:
 Duration, limit and cooldown of pings are configurable in the config.
 
 Changelogs:
+v0.2:
+- Port to tml 1.4
+
 v0.1.1.2:
 - Fixed a server error when a player dies in multiplayer
 
-v0.1.1.1:
-- Added Desert Fossil, Silt and Slush to the ore category
-- Improved tile names

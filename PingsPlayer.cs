@@ -7,6 +7,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Audio;
 
 namespace Pings
 {
@@ -34,11 +35,11 @@ namespace Pings
 			}
 
 			bool? notify = null;
-			ModHotKey hotkey = PingsMod.PingHotKey;
+			ModKeybind hotkey = PingsMod.PingHotKey;
 
 			if (hotkey.JustPressed)
 			{
-				Main.PlaySound(SoundID.MenuOpen);
+				SoundEngine.PlaySound(SoundID.MenuOpen);
 			}
 
 			if (hotkey.Current)
@@ -48,9 +49,9 @@ namespace Pings
 					KeyHoldTimer++;
 					if (KeyHoldTimer > KeyHoldTimerMax)
 					{
-						PingsWorld.SpawnDustGoingOutwards(Main.MouseWorld, 10f, DustID.Fire, 10, 0.5f);
+						PingsSystem.SpawnDustGoingOutwards(Main.MouseWorld, 10f, DustID.Torch, 10, 0.5f);
 
-						Main.PlaySound(SoundID.MaxMana);
+						SoundEngine.PlaySound(SoundID.MaxMana);
 						notifyAfterHeld = true;
 					}
 				}
@@ -62,7 +63,7 @@ namespace Pings
 				{
 					type = 60;
 				}
-				PingsWorld.SpawnRotatingDust(Main.MouseWorld - size / 2, distance, size, type);
+				PingsSystem.SpawnRotatingDust(Main.MouseWorld - size / 2, distance, size, type);
 
 			}
 			else if (hotkey.JustReleased)
@@ -81,23 +82,23 @@ namespace Pings
 				if (PingCooldownTimer > 0)
 				{
 					//+60 so it doesn't say "0s"
-					CombatText.NewText(player.getRect(), Color.Cyan, $"Ping CD: {(PingCooldownTimer + 60) / 60}s");
+					CombatText.NewText(Player.getRect(), Color.Cyan, $"Ping CD: {(PingCooldownTimer + 60) / 60}s");
 					return;
 				}
 
-				Ping ping = Ping.MakePing(player, Main.MouseWorld, notified);
+				Ping ping = Ping.MakePing(Player, Main.MouseWorld, notified);
 				if (ping != null)
 				{
 					PingCooldownTimer = 60 * ServerConfig.Instance.PingCooldown + 30;
 
-					bool? success = PingsWorld.AddOrRemove(ping);
+					bool? success = PingsSystem.AddOrRemove(ping);
 
 					if (success.HasValue && success.Value is bool added)
 					{
 						//PingsMod.Log($"Send ping {added}", true, true);
 						new PingPacket(ping).Send();
 
-						Main.PlaySound(added ? SoundID.Chat : SoundID.MenuClose);
+						SoundEngine.PlaySound(added ? SoundID.Chat : SoundID.MenuClose);
 					}
 				}
 			}
@@ -105,7 +106,7 @@ namespace Pings
 
 		public override void UpdateDead()
 		{
-			if (Main.myPlayer == player.whoAmI && Main.netMode != NetmodeID.Server)
+			if (Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.Server)
 			{
 				HandleHotKey();
 			}
@@ -113,7 +114,7 @@ namespace Pings
 
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
-			if (player.dead)
+			if (Player.dead)
 			{
 				return;
 			}
@@ -125,7 +126,7 @@ namespace Pings
 			UUID = string.Empty;
 		}
 
-		public override void Load(TagCompound tag)
+		public override void LoadData(TagCompound tag)
 		{
 			UUID = tag.GetString("uuid");
 			if (UUID == null)
@@ -134,33 +135,29 @@ namespace Pings
 			}
 		}
 
-		public override TagCompound Save()
+		public override void SaveData(TagCompound tag)
 		{
 			if (UUID != string.Empty)
 			{
-				return new TagCompound()
-				{
-					{ "uuid", UUID }
-				};
+				tag.Add("uuid", UUID);
 			}
-			return null;
 		}
 
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				new UUIDPacket(player, UUID).Send();
+				new UUIDPacket(Player, UUID).Send();
 			}
 			else
 			{
-				new UUIDPacket(player, UUID).Send(toWho, fromWho);
+				new UUIDPacket(Player, UUID).Send(toWho, fromWho);
 			}
 		}
 
 		public override void PreUpdate()
 		{
-			if (player.whoAmI == Main.myPlayer)
+			if (Player.whoAmI == Main.myPlayer)
 			{
 				if (PingCooldownTimer >= 0)
 				{

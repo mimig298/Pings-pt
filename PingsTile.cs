@@ -1,14 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Pings
 {
 	public class PingsTile : GlobalTile
 	{
-		public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref Color drawColor, ref int nextSpecialDrawIndex)
+		public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
 		{
-			PingsWorld.HighlightTile(i, j, ref drawColor);
+			PingsSystem.HighlightTile(i, j, ref drawData);
 		}
 	}
 }

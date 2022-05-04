@@ -7,6 +7,7 @@ using Terraria.ModLoader.Config;
 
 namespace Pings
 {
+	[Label("Server Config")]
 	public class ServerConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ServerSide;
