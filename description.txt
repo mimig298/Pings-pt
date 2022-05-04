@@ -21,7 +21,7 @@ Things you can ping:
 Duration, limit and cooldown of pings are configurable in the server config, ping visuals in the client config.
 
 Changelogs:
-v0.2:
+v0.2.0.2:
 - Port to tml 1.4
 - Add client config to toggle ping visuals
 
