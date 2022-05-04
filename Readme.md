@@ -22,14 +22,15 @@ Things you can ping:
 * NPCs (Enemies, critters, etc.)
 * Dropped items
 
-Duration, limit and cooldown of pings are configurable in the config.
+Duration, limit and cooldown of pings are configurable in the server config, ping visuals in the client config.
 
 Credits:
 * _hamstar_ for map draw code
 
 Changelogs:
-v0.1.1.2:
-- Fixed a server error when a player dies in multiplayer
+v0.2:
+- Port to tml 1.4
+- Add client config to toggle ping visuals
 
 v0.1.1.1:
 - Added Desert Fossil, Silt and Slush to the ore category

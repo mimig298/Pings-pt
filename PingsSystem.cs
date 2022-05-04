@@ -616,8 +616,12 @@ namespace Pings
 
 		internal static void UpdatePingDust()
 		{
-			//TODO config disable dust
 			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (!ClientConfig.Instance.CircularParticles)
 			{
 				return;
 			}
@@ -683,6 +687,11 @@ namespace Pings
 
 		internal static void HighlightTile(int i, int j, ref TileDrawInfo drawData)
 		{
+			if (!ClientConfig.Instance.Highlight)
+			{
+				return;
+			}
+
 			Point point = new Point(i, j);
 			foreach (var ping in Pings)
 			{
@@ -703,6 +712,11 @@ namespace Pings
 
 		internal static void HighlightNPC(NPC npc, ref Color drawColor)
 		{
+			if (!ClientConfig.Instance.Highlight)
+			{
+				return;
+			}
+
 			foreach (var ping in Pings)
 			{
 				if (ping.IsVisible() && ping.HasWhoAmI && ping.PingType == PingType.NPC && npc.whoAmI == ping.WhoAmI && npc.type == ping.Type)
@@ -723,9 +737,9 @@ namespace Pings
 
 				int i = (int)(amount * (Main.GameUpdateCount % 60 / 60f));
 
-				int loops = 1 + (int)(value.LengthSquared() / (32 * 32));
+				int loops = 1 + (int)(value.LengthSquared() / (40 * 40));
 
-				loops = Math.Min(10, loops);
+				loops = Math.Min(8, loops);
 
 				amount *= loops;
 
