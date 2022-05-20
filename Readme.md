@@ -28,6 +28,10 @@ Credits:
 * _hamstar_ for map draw code
 
 Changelogs:
+v0.2.0.3:
+- Fix some players not being able to ping
+- Ping cooldown now only given after additions, not removals
+
 v0.2.0.2:
 - Port to tml 1.4
 - Add client config to toggle ping visuals
