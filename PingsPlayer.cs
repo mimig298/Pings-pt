@@ -89,14 +89,17 @@ namespace Pings
 				Ping ping = Ping.MakePing(Player, Main.MouseWorld, notified);
 				if (ping != null)
 				{
-					PingCooldownTimer = 60 * ServerConfig.Instance.PingCooldown + 30;
-
 					bool? success = PingsSystem.AddOrRemove(ping);
 
 					if (success.HasValue && success.Value is bool added)
 					{
 						//PingsMod.Log($"Send ping {added}", true, true);
 						new PingPacket(ping).Send();
+
+						if (added)
+						{
+							PingCooldownTimer = 60 * ServerConfig.Instance.PingCooldown + 30;
+						}
 
 						SoundEngine.PlaySound(added ? SoundID.Chat : SoundID.MenuClose);
 					}
