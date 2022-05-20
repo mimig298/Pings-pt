@@ -143,13 +143,24 @@ namespace Pings
 			}
 		}
 
-		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+		public override void OnEnterWorld(Player player)
 		{
+			CalculateUUIDForLocalPlayer();
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				new UUIDPacket(Player, UUID).Send();
 			}
-			else
+		}
+
+		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+		{
+			//Don't think this is even necessary
+			//if (Main.netMode == NetmodeID.MultiplayerClient && !newPlayer) //newPlayer is true for the client that joins the game. We send it in OnEnterWorld in this case
+			//{
+			//	new UUIDPacket(Player, UUID).Send();
+			//}
+
+			if (Main.netMode == NetmodeID.Server)
 			{
 				new UUIDPacket(Player, UUID).Send(toWho, fromWho);
 			}

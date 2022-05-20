@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Pings.Netcode;
 using System;
 using System.Collections.Generic;
@@ -7,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -35,7 +32,6 @@ namespace Pings
 			NetHandler.Load();
 			Ping.Load();
 			PingHotKey = KeybindLoader.RegisterKeybind(this, "Ping Object at Cursor", "Mouse3");
-			On.Terraria.IO.PlayerFileData.SetAsActive += PlayerFileData_SetAsActive;
 		}
 
 		public override void PostSetupContent()
@@ -56,14 +52,6 @@ namespace Pings
 				TileID.Amethyst,
 				TileID.Diamond,
 			};
-		}
-
-		private void PlayerFileData_SetAsActive(On.Terraria.IO.PlayerFileData.orig_SetAsActive orig, Terraria.IO.PlayerFileData self)
-		{
-			orig(self);
-
-			//TODO THIS DOESN'T WORK FOR THE NON-FIRST PLAYER ON RELEASE BUILD, JIT ISSUE
-			PingsPlayer.CalculateUUIDForLocalPlayer();
 		}
 
 		public override void Unload()
