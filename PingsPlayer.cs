@@ -13,8 +13,6 @@ namespace Pings
 {
 	public class PingsPlayer : ModPlayer
 	{
-		public override bool CloneNewInstances => false;
-
 		public string UUID { internal set; get; }
 
 		private int KeyHoldTimer = 0;
