@@ -1,0 +1,40 @@
+[b]Pings[/b]
+
+Enemies, resources, and other interesting objects can be marked using a bindable hotkey, creating a "point of interest" (referred to as "ping").
+The locations of marked creatures and objects are visible in the world and on the world map, making it a useful tool for alerting teammates to the location of enemies or loot.
+
+Pinging NPCs has the benefit of stopping them from despawning if no players are in range.
+
+The perfect mod for multiplayer!
+
+[b]Quick Guide:[/b]
+* Press and release the hotkey to create a ping
+* Hold the hotkey for a second to also notify everyone through the in-game chat
+* Ping the same object again to remove the ping
+
+[b]Things you can ping:[/b]
+* Yourself (Rendezvous location)
+* Tiles (Blocks, ore veins, furniture, etc.)
+* NPCs (Enemies, critters, etc.)
+* Dropped items
+
+Duration, limit and cooldown of pings are configurable in the server config, ping visuals in the client config.
+
+[b]Changelogs:[/b]
+v0.2.0.5:
+- Fix incompatibility with WorldgenPreviewer
+
+v0.2.0.4:
+- Fix bugs due to tml updates
+
+v0.2.0.3:
+- Fix some players not being able to ping
+- Ping cooldown now only given after additions, not removals
+
+v0.2.0.2:
+- Port to tml 1.4
+- Add client config to toggle ping visuals
+
+v0.1.1.2:
+- Fixed a server error when a player dies in multiplayer
+
