@@ -18,9 +18,24 @@ namespace Pings
 
 		public static List<Ping> Pings { internal set; get; }
 
-		public override void OnWorldLoad()
+		private void Initialize()
 		{
 			Pings = new List<Ping>();
+		}
+
+		public override void PreWorldGen()
+		{
+			Initialize();
+		}
+
+		public override void OnWorldLoad()
+		{
+			Initialize();
+		}
+
+		public override void OnWorldUnload()
+		{
+			Pings = null;
 		}
 
 		public override void NetSend(BinaryWriter writer)
