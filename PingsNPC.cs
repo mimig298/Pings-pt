@@ -18,7 +18,8 @@ namespace Pings
 
 			//"Inflate" the hitbox in all directions by its dimensions for safety,
 			//Then check if its outside the "world" dimensions (excluding 40 tiles outside)
-			if (npc.Left.X - npc.width    < dims.X ||
+			if (PingsSystem.Pings == null ||
+				npc.Left.X - npc.width    < dims.X ||
 				npc.Right.X + npc.width   > dims.Width ||
 				npc.Top.Y - npc.height    < dims.Y ||
 				npc.Bottom.Y + npc.height > dims.Height)
