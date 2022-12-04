@@ -1,5 +1,3 @@
---Pings--
-
 Enemies, resources, and other interesting objects can be marked using a bindable hotkey, creating a "point of interest" (referred to as "ping").
 The locations of marked creatures and objects are visible in the world and on the world map, making it a useful tool for alerting teammates to the location of enemies or loot.
 
