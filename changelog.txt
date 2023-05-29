@@ -1,1 +1,3 @@
-Fixed incompatibility with WorldgenPreviewer
+* Updated to 1.4.4 tml
+* Fixed some ping names not having spaces in them
+* Now localizable. Read the mod description for more info

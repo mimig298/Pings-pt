@@ -7,7 +7,6 @@ using Terraria.ModLoader.Config;
 
 namespace Pings
 {
-	[Label("Server Config")]
 	public class ServerConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ServerSide;
@@ -17,8 +16,6 @@ namespace Pings
 		public const int PingsPerPlayerMin = 1;
 		public const int PingsPerPlayerMax = 10;
 
-		[Tooltip("Exceeding this limit will delete the oldest ping of that player")]
-		[Label("Maximum amount of pings per player")]
 		[Slider]
 		[SliderColor(50, 50, 255)]
 		[Range(PingsPerPlayerMin, PingsPerPlayerMax)]
@@ -28,8 +25,6 @@ namespace Pings
 		public const int PingDurationMin = 10; //Seconds!
 		public const int PingDurationMax = 30 * 60; //Half an hour = Infinite in code
 
-		[Tooltip("In seconds. If max, infinite duration")]
-		[Label("The lifetime/duration of a ping")]
 		[Slider]
 		[SliderColor(50, 50, 255)]
 		[Range(PingDurationMin, PingDurationMax)]
@@ -39,8 +34,6 @@ namespace Pings
 		public const int PingCooldownMin = 1; //Seconds!
 		public const int PingCooldownMax = 60; //A minute
 
-		[Tooltip("In seconds")]
-		[Label("Cooldown between pings")]
 		[Slider]
 		[SliderColor(50, 50, 255)]
 		[Range(PingCooldownMin, PingCooldownMax)]
@@ -70,7 +63,7 @@ namespace Pings
 			if (Main.netMode == NetmodeID.SinglePlayer) return true;
 			else if (!IsPlayerLocalServerOwner(whoAmI))
 			{
-				message = "You are not the server owner so you can not change this config";
+				message = PingsMod.AcceptClientChangesText.ToString();
 				return false;
 			}
 			return base.AcceptClientChanges(pendingConfig, whoAmI, ref message);

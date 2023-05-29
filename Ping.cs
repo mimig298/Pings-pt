@@ -253,11 +253,7 @@ namespace Pings
 
 			if (tile.HasTile)
 			{
-				if (tile.TileType < TileID.Count)
-				{
-					text = GetTileName(text, point, tile);
-					text = PingsMod.SplitCapitalString(text);
-				}
+				text = GetTileName(text, point, tile);
 				if (string.IsNullOrEmpty(text))
 				{
 					if (tile.TileType < TileID.Count)
@@ -268,6 +264,7 @@ namespace Pings
 					else
 					{
 						text = TileLoader.GetTile(tile.TileType).Name;
+						text = PingsMod.SplitCapitalString(text);
 					}
 				}
 
@@ -594,10 +591,10 @@ namespace Pings
 
 			writer.Write(flags);
 
-			writer.Write((int)DecayDuration);
+			writer.Write7BitEncodedInt(DecayDuration);
 			if (notSpawned)
 			{
-				writer.Write((int)DecayTimer);
+				writer.Write7BitEncodedInt(DecayTimer);
 			}
 
 			if (HasLocation)
@@ -624,7 +621,7 @@ namespace Pings
 
 			if (HasType)
 			{
-				writer.Write((int)Type);
+				writer.Write7BitEncodedInt(Type);
 			}
 
 			if (HasText)
@@ -646,11 +643,11 @@ namespace Pings
 
 			Ping ping = new Ping(uuid, pingType, notify);
 
-			ping.DecayDuration = reader.ReadInt32();
+			ping.DecayDuration = reader.Read7BitEncodedInt();
 			ping.RefreshDuration();
 			if (notSpawned)
 			{
-				ping.DecayTimer = reader.ReadInt32();
+				ping.DecayTimer = reader.Read7BitEncodedInt();
 			}
 
 			if (ping.HasLocation)
@@ -675,7 +672,7 @@ namespace Pings
 
 			if (ping.HasType)
 			{
-				ping.Type = reader.ReadInt32();
+				ping.Type = reader.Read7BitEncodedInt();
 			}
 
 			if (ping.HasText)
@@ -688,7 +685,7 @@ namespace Pings
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is Ping ping)) return false;
+			if (obj is not Ping ping) return false;
 
 			PingType pingType = ping.PingType;
 

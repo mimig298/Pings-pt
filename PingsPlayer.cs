@@ -25,7 +25,7 @@ namespace Pings
 
 		private bool dataRequestedAfterJoin = false;
 
-		private void HandleHotKey()
+		private void HandleKeybind()
 		{
 			if (Main.mapFullscreen)
 			{
@@ -33,7 +33,7 @@ namespace Pings
 			}
 
 			bool? notify = null;
-			ModKeybind hotkey = PingsMod.PingHotKey;
+			ModKeybind hotkey = PingsMod.PingKeybind;
 
 			if (hotkey.JustPressed)
 			{
@@ -109,7 +109,7 @@ namespace Pings
 		{
 			if (Main.myPlayer == Player.whoAmI && Main.netMode != NetmodeID.Server)
 			{
-				HandleHotKey();
+				HandleKeybind();
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace Pings
 			{
 				return;
 			}
-			HandleHotKey();
+			HandleKeybind();
 		}
 
 		public override void Initialize()
@@ -144,7 +144,7 @@ namespace Pings
 			}
 		}
 
-		public override void OnEnterWorld(Player player)
+		public override void OnEnterWorld()
 		{
 			CalculateUUIDForLocalPlayer();
 			if (Main.netMode == NetmodeID.MultiplayerClient)

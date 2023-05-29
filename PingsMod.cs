@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Pings
@@ -16,13 +17,15 @@ namespace Pings
 	//TODO fix whoami regression/ping going invisible when different player joins
 	public class PingsMod : Mod
 	{
-		public static ModKeybind PingHotKey { internal set; get; }
+		public static ModKeybind PingKeybind { internal set; get; }
 
 		public static PingsMod Mod { internal set; get; }
 
 		public static HashSet<ushort> Ores { internal set; get; }
 
 		public static HashSet<ushort> GemOres { internal set; get; }
+
+		public static LocalizedText AcceptClientChangesText { get; private set; }
 
 		public static bool IsCluster(ushort type) => type <= TileLoader.TileCount && (TileID.Sets.Ore[type] || Ores.Contains(type) || GemOres.Contains(type));
 
@@ -31,7 +34,10 @@ namespace Pings
 			Mod = this;
 			NetHandler.Load();
 			Ping.Load();
-			PingHotKey = KeybindLoader.RegisterKeybind(this, "Ping Object at Cursor", "Mouse3");
+			PingKeybind = KeybindLoader.RegisterKeybind(this, "PingObjectAtCursor", "Mouse3");
+
+			string category = $"Configs.Common.";
+			AcceptClientChangesText ??= Language.GetOrRegister(this.GetLocalizationKey($"{category}AcceptClientChanges"));
 		}
 
 		public override void PostSetupContent()
@@ -62,7 +68,7 @@ namespace Pings
 			PingsSystem.Pings = null;
 			Ores = null;
 			GemOres = null;
-			PingHotKey = null;
+			PingKeybind = null;
 		}
 
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -85,7 +91,7 @@ namespace Pings
 				msg = $"{time,16} {msg}";
 			}
 
-			PingsMod.Mod.Logger.Info(msg);
+			Mod.Logger.Info(msg);
 
 			if (!chat) return;
 

@@ -1,6 +1,6 @@
 # Pings
 
-![Icon](https://raw.githubusercontent.com/direwolf420/Pings/master/icon.png)
+![Icon](https://raw.githubusercontent.com/direwolf420/Pings/1.4/icon.png)
 
 Terraria Forum link: [Here](https://forums.terraria.org/index.php?threads/pings-create-point-of-interest-markers.103777/)
 
@@ -27,32 +27,10 @@ Duration, limit and cooldown of pings are configurable in the server config, pin
 Credits:
 * _hamstar_ for map draw code
 
-Changelogs:
-v0.2.0.5:
-- Fix incompatibility with WorldgenPreviewer
+## Localization
+If you wish to contribute translations, visit the [tML wiki page](https://github.com/tModLoader/tModLoader/wiki/Localization) on that.
+This mod uses `.hjson` files in the `Localization` folder.
+Translate things that are in english and commented out (either via `//` or `/* */`, remove the comment markers after translating)
 
-v0.2.0.4:
-- Fix bugs due to tml updates
-
-v0.2.0.3:
-- Fix some players not being able to ping
-- Ping cooldown now only given after additions, not removals
-
-v0.2.0.2:
-- Port to tml 1.4
-- Add client config to toggle ping visuals
-
-v0.1.1.1:
-- Added Desert Fossil, Silt and Slush to the ore category
-- Improved tile names
-
-v0.1.1:
-- Added edit protection for the server config
-- You can now only see pings from players that are teamless or on the same team
-
-v0.1.0.2:
-- Improved feedback for hotkey
-- Pinged bosses will properly despawn if they flee
-
-v0.1.0.1:
-- Initial release
+List of localization contributors:
+* None!

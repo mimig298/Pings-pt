@@ -18,19 +18,9 @@ namespace Pings
 
 		public static List<Ping> Pings { internal set; get; }
 
-		private void Initialize()
+		public override void ClearWorld()
 		{
 			Pings = new List<Ping>();
-		}
-
-		public override void PreWorldGen()
-		{
-			Initialize();
-		}
-
-		public override void OnWorldLoad()
-		{
-			Initialize();
 		}
 
 		public override void OnWorldUnload()
@@ -42,7 +32,7 @@ namespace Pings
 		{
 			//PingsMod.Log("NetSend", true, true);
 			int count = Pings.Count;
-			writer.Write(count);
+			writer.Write7BitEncodedInt(count);
 			for (int i = 0; i < count; i++)
 			{
 				Ping ping = Pings[i];
@@ -55,7 +45,7 @@ namespace Pings
 			Pings = new List<Ping>();
 
 			//PingsMod.Log("NetReceive", true, true);
-			int count = reader.ReadInt32();
+			int count = reader.Read7BitEncodedInt();
 			for (int i = 0; i < count; i++)
 			{
 				Ping ping = Ping.FromNet(reader);
@@ -63,12 +53,10 @@ namespace Pings
 			}
 		}
 
-
-
 		public override void PostUpdateEverything()
 		{
-			PingsSystem.UpdatePingDespawn();
-			PingsSystem.UpdatePingDust();
+			UpdatePingDespawn();
+			UpdatePingDust();
 		}
 
 		public override void PostDrawFullscreenMap(ref string mouseText)
@@ -90,7 +78,7 @@ namespace Pings
 
 			Ping targetPing = null;
 
-			foreach (var ping in PingsSystem.Pings)
+			foreach (var ping in Pings)
 			{
 				float distX = mouseTile.X - ping.TileCenter.X;
 				float distY = mouseTile.Y - ping.TileCenter.Y;
@@ -103,7 +91,7 @@ namespace Pings
 				}
 			}
 
-			foreach (var ping in PingsSystem.Pings)
+			foreach (var ping in Pings)
 			{
 				if (ping.IsVisible())
 				{
@@ -143,7 +131,7 @@ namespace Pings
 			{
 				NPC npc = Main.npc[ping.WhoAmI];
 				effects = npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-				if (NPCID.Sets.TownCritter[npc.type] || (npc.friendly && npc.lifeMax < 5))
+				if (NPCID.Sets.TownCritter[npc.type] || NPCID.Sets.CountsAsCritter[npc.type] || (npc.friendly && npc.lifeMax < 5))
 				{
 					if (Ping.SpecialTextures.TryGetValue("NPC_Critter", out var texture))
 					{
@@ -183,7 +171,9 @@ namespace Pings
 
 				string timeText = string.Empty;
 
-				string text = PingsMod.SplitCapitalString(ping.Text);
+				//Commented because it causes stuff like "Katethe Nurse"
+				//string text = PingsMod.SplitCapitalString(ping.Text);
+				string text = ping.Text;
 
 				if (ping.PingType == PingType.SelfPlayer)
 				{
@@ -623,7 +613,10 @@ namespace Pings
 			{
 				foreach (var ping in toRemoveAndSync)
 				{
-					new PingPacket(ping).Send();
+					if (Main.netMode != NetmodeID.SinglePlayer)
+					{
+						new PingPacket(ping).Send();
+					}
 					Pings.Remove(ping);
 				}
 			}

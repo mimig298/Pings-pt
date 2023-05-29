@@ -18,21 +18,7 @@ Things you can ping:
 
 Duration, limit and cooldown of pings are configurable in the server config, ping visuals in the client config.
 
-Changelogs:
-v0.2.0.5+6:
-- Fix incompatibility with WorldgenPreviewer
-
-v0.2.0.4:
-- Fix bugs due to tml updates
-
-v0.2.0.3:
-- Fix some players not being able to ping
-- Ping cooldown now only given after additions, not removals
-
-v0.2.0.2:
-- Port to tml 1.4
-- Add client config to toggle ping visuals
-
-v0.1.1.2:
-- Fixed a server error when a player dies in multiplayer
-
+Localization:
+If you want to add support for different languages, you are welcome to contribute localizations here: https://github.com/direwolf420/Pings
+List of localization contributors:
+* None!
