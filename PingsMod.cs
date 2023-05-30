@@ -11,7 +11,6 @@ using Terraria.ModLoader;
 
 namespace Pings
 {
-	//Credit to hamstar for the map draw code
 	//TODO light level check threshold (everything, configurable)
 	//TODO tile pings dont appear in MP for other players if too far away
 	//TODO fix whoami regression/ping going invisible when different player joins
