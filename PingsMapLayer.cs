@@ -138,8 +138,8 @@ namespace Pings
 
 			if (ping.PingType == PingType.SelfPlayer)
 			{
-				string uk = "Unknown";
-				text = $"{ping.Player?.name ?? uk} Rendezvous";
+				string uk = PingsSystem.PlayerNameUnknownText.Value;
+				text = PingsSystem.PlayerRendezvousText.Format(ping.Player?.name ?? uk);
 			}
 
 			if (isTarget && !string.IsNullOrEmpty(text))

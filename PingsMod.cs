@@ -64,7 +64,6 @@ namespace Pings
 			Mod = null;
 			NetHandler.Unload();
 			Ping.Unload();
-			PingsSystem.Pings = null;
 			Ores = null;
 			GemOres = null;
 			PingKeybind = null;

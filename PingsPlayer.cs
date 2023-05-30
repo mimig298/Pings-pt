@@ -80,7 +80,7 @@ namespace Pings
 				if (PingCooldownTimer > 0)
 				{
 					//+60 so it doesn't say "0s"
-					CombatText.NewText(Player.getRect(), Color.Cyan, $"Ping CD: {(PingCooldownTimer + 60) / 60}s");
+					CombatText.NewText(Player.getRect(), Color.Cyan, PingsSystem.PingCDText.Format((PingCooldownTimer + 60) / 60));
 					return;
 				}
 

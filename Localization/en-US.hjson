@@ -38,5 +38,17 @@ Mods: {
 
 			Common.AcceptClientChanges: Only the host of this world can change the config! Do so in singleplayer.
 		}
+
+		PingStatus: {
+			PlayerNameUnknown: Unknown
+			PlayerRendezvous: "{0} Rendezvous"
+		}
+
+		PingFeedback: {
+			PingCD: Ping CD: {0}s
+			RemovedPing: Removed Ping.
+			PingAnything: "{0} found '{1}'!"
+			PingPlayer: "{0} marked a rendezvous location!"
+		}
 	}
 }

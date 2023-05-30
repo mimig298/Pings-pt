@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Pings.Netcode.Packets;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Pings
@@ -18,12 +18,37 @@ namespace Pings
 
 		public static List<Ping> Pings { internal set; get; }
 
+		public static LocalizedText PlayerNameUnknownText { get; private set; }
+		public static LocalizedText PlayerRendezvousText { get; private set; }
+		public static LocalizedText PingCDText { get; private set; }
+		public static LocalizedText RemovedPingText { get; private set; }
+		public static LocalizedText PingAnythingText { get; private set; }
+		public static LocalizedText PingPlayerText { get; private set; }
+
+		public override void Load()
+		{
+			string category = $"PingStatus.";
+			PlayerNameUnknownText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}PlayerNameUnknown"));
+			PlayerRendezvousText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}PlayerRendezvous"));
+
+			category = $"PingFeedback.";
+			PingCDText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}PingCD"));
+			RemovedPingText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}RemovedPing"));
+			PingAnythingText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}PingAnything"));
+			PingPlayerText ??= Language.GetOrRegister(Mod.GetLocalizationKey($"{category}PingPlayer"));
+		}
+
 		public override void ClearWorld()
 		{
 			Pings = new List<Ping>();
 		}
 
 		public override void OnWorldUnload()
+		{
+			Pings = null;
+		}
+
+		public override void Unload()
 		{
 			Pings = null;
 		}
@@ -86,7 +111,7 @@ namespace Pings
 
 					if (player.whoAmI == Main.myPlayer)
 					{
-						Main.NewText("Removed ping.", Color.DeepPink);
+						Main.NewText(RemovedPingText.ToString(), Color.DeepPink);
 					}
 
 					return false;
@@ -114,11 +139,11 @@ namespace Pings
 			{
 				if (ping.PingType != PingType.SelfPlayer)
 				{
-					Main.NewText($"{player.name} found '{actualPing.Text}'!", Color.DarkSeaGreen);
+					Main.NewText(PingAnythingText.Format(player.name, actualPing.Text), Color.DarkSeaGreen);
 				}
 				else
 				{
-					Main.NewText($"{player.name} marked a rendezvous location!", Color.Green);
+					Main.NewText(PingPlayerText.Format(player.name), Color.Green);
 				}
 			}
 
