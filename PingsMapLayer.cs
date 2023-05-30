@@ -50,7 +50,8 @@ namespace Pings
 			Vector2 _mapOffset = (Vector2)mapOffsetField.GetValue(context);
 			float _mapScale = (float)mapScaleField.GetValue(context);
 
-			int maxDistSqr = (int)(36 * 36 * _mapScale); //Consistent distance regardless of scale
+			int size = ClientConfig.Instance.MouseoverIconSize;
+			int maxDistSqr = (int)(size * size * _mapScale); //Consistent distance regardless of scale
 			float closestTileDistSqr = maxDistSqr;
 			Ping targetPing = null;
 

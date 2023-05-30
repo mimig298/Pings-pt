@@ -15,6 +15,11 @@ Mods: {
 					Label: Highlight Pinged Object
 					Tooltip: If the object should appear highlighted (similar to the spelunker effect on ores)
 				}
+
+				MouseoverIconSize: {
+					Label: Mouseover Icon Size
+					Tooltip: How big the mouseover size for ping icons is
+				}
 			}
 
 			ServerConfig: {
