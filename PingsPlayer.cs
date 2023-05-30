@@ -147,24 +147,15 @@ namespace Pings
 		public override void OnEnterWorld()
 		{
 			CalculateUUIDForLocalPlayer();
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-			{
-				new UUIDPacket(Player, UUID).Send();
-			}
 		}
 
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
-			//Don't think this is even necessary
-			//if (Main.netMode == NetmodeID.MultiplayerClient && !newPlayer) //newPlayer is true for the client that joins the game. We send it in OnEnterWorld in this case
-			//{
-			//	new UUIDPacket(Player, UUID).Send();
-			//}
-
-			if (Main.netMode == NetmodeID.Server)
+			if (Player.whoAmI == Main.myPlayer)
 			{
-				new UUIDPacket(Player, UUID).Send(toWho, fromWho);
+				CalculateUUIDForLocalPlayer();
 			}
+			new UUIDPacket(Player, UUID).Send(toWho, fromWho);
 		}
 
 		public override void PreUpdate()
@@ -216,22 +207,24 @@ namespace Pings
 		public static void CalculateUUIDForLocalPlayer(bool shortHash = true)
 		{
 			PingsPlayer pingsPlayer = Main.LocalPlayer.GetModPlayer<PingsPlayer>();
-			if (pingsPlayer.UUID == string.Empty)
+			if (pingsPlayer.UUID != string.Empty)
 			{
-				int hash = Math.Abs(Main.ActivePlayerFileData.Path.GetHashCode() ^ Main.ActivePlayerFileData.IsCloudSave.GetHashCode());
-				string uuid = Main.clientUUID + "_" + hash;
-
-				int n = 4;
-				if (shortHash && uuid.Length > n * 2)
-				{
-					var firstN = new string(uuid.Take(n).ToArray());
-					var lastN = new string(uuid.Reverse().Take(n).Reverse().ToArray());
-
-					uuid = string.Concat(firstN, lastN);
-				}
-
-				pingsPlayer.UUID = uuid;
+				return;
 			}
+
+			int hash = Math.Abs(Main.ActivePlayerFileData.Path.GetHashCode() ^ Main.ActivePlayerFileData.IsCloudSave.GetHashCode());
+			string uuid = Main.clientUUID + "_" + hash;
+
+			int n = 4;
+			if (shortHash && uuid.Length > n * 2)
+			{
+				var firstN = new string(uuid.Take(n).ToArray());
+				var lastN = new string(uuid.Reverse().Take(n).Reverse().ToArray());
+
+				uuid = string.Concat(firstN, lastN);
+			}
+
+			pingsPlayer.UUID = uuid;
 		}
 	}
 }
