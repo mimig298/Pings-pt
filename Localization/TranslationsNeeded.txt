@@ -3,7 +3,7 @@ de-DE, 0/22, 0%, missing 22
 it-IT, 0/22, 0%, missing 22
 fr-FR, 0/22, 0%, missing 22
 es-ES, 0/22, 0%, missing 22
-ru-RU, 0/22, 0%, missing 22
+ru-RU, 22/22, 100%, missing 0
 zh-Hans, 0/22, 0%, missing 22
 pt-BR, 0/22, 0%, missing 22
-pl-PL, 0/22, 0%, missing 22
+pl-PL, 22/22, 100%, missing 0

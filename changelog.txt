@@ -1,6 +1,2 @@
-* Updated to 1.4.4 tml
-* Pings now display on the minimap
-* Pings now have consistent mouseover size (regardless of map zoom) which can also be changed in the config
-* Enemy/Critter pings now always face left (TML limitation)
-* Fixed some ping names not having spaces in them
-* Now localizable. Read the mod description for more info
+* Added polish localization, thanks Taco!
+* Added russian localization, thanks GodHybrid!

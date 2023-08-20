@@ -42,7 +42,7 @@ Mods: {
 			}
 
 			Common.AcceptClientChanges: Tylko gospodarz tego świata może zmieniać ustawienia konfiguracji! Zrób to w trybie jednoosobowym.
-                }
+		}
 
 		PingStatus: {
 			PlayerNameUnknown: Nieznany

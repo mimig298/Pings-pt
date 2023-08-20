@@ -22,5 +22,6 @@ Duration, limit and cooldown of pings are configurable in the server config, pin
 [b]Localization:[/b]
 If you want to add support for different languages, you are welcome to contribute localizations here: [b][url=https://github.com/direwolf420/Pings]GitHub[/url][/b]
 List of localization contributors:
-* None!
+* Polish: [b]Taco[/b]
+* Russian: [b]GodHybrid[/b]
 
