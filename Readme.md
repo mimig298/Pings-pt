@@ -32,3 +32,4 @@ Translate things that are in english and commented out (either via `//` or `/* *
 List of localization contributors:
 * Polish: **Taco**
 * Russian: **GodHybrid**
+* Italian: **Sea Noodle**

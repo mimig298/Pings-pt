@@ -1,5 +1,5 @@
 displayName = Pings
 author = direwolf420
-version = 0.3.0.1
+version = 0.3.0.2
 buildIgnore = *.csproj, *.sln, *.user, *.md, obj\*, bin\*, .vs\*, .git\*, .gitignore, .editorconfig, Textures\Samples\*
 homepage = https://forums.terraria.org/index.php?threads/pings-create-point-of-interest-markers.103777/

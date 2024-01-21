@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Pings
@@ -24,8 +23,6 @@ namespace Pings
 
 		public static HashSet<ushort> GemOres { internal set; get; }
 
-		public static LocalizedText AcceptClientChangesText { get; private set; }
-
 		public static bool IsCluster(ushort type) => type <= TileLoader.TileCount && (TileID.Sets.Ore[type] || Ores.Contains(type) || GemOres.Contains(type));
 
 		public override void Load()
@@ -34,9 +31,6 @@ namespace Pings
 			NetHandler.Load();
 			Ping.Load();
 			PingKeybind = KeybindLoader.RegisterKeybind(this, "PingObjectAtCursor", "Mouse3");
-
-			string category = $"Configs.Common.";
-			AcceptClientChangesText ??= Language.GetOrRegister(this.GetLocalizationKey($"{category}AcceptClientChanges"));
 		}
 
 		public override void PostSetupContent()
