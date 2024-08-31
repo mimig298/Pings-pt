@@ -1,74 +1,57 @@
 Mods: {
 	Pings: {
 		Keybinds.PingObjectAtCursor.DisplayName: Marcar objeto no cursor
+
 		Configs: {
 			ClientConfig: {
-				// DisplayName: Client Config
-                                DisplayName: Configurações de Cliente
+				DisplayName: Configurações de Cliente
 
 				CircularParticles: {
-					// Label: Circular Particles on Ping Object
-                                        Label: Partículas circulares no Objeto de Alerta
-					// Tooltip: If particles should circulate around the pinged object
-                                        Tooltip: Se partículas devem circular em volta do objeto marcado
+					Label: Partículas circulares no Objeto de Alerta
+					Tooltip: Se partículas devem circular em volta do objeto marcado
 				}
 
 				Highlight: {
-					// Label: Highlight Pinged Object
-                                        Label: Marcar Objeto de Alerta
-					// Tooltip: If the object should appear highlighted (similar to the spelunker effect on ores)
+					Label: Marcar Objeto de Alerta
+					Tooltip: Se o objeto deve aparecer marcado (semelhante ao efeito de espeleólogo em minérios)
 				}
 
 				MouseoverIconSize: {
-					// Label: Mouseover Icon Size
-                                        Label: Tamanho de Ícone sobre o Rato
-					// Tooltip: How big the mouseover size for ping icons is
-                                        Tooltip: Tamanho sobre o rato de ícones de alerta
+					Label: Tamanho de Ícone sobre o Rato
+					Tooltip: Tamanho de ícones de alerta sobre o rato
 				}
 			}
 
 			ServerConfig: {
-				// DisplayName: Server Config
-                                DisplayName: Configurações de Servidor
+				DisplayName: Configurações de Servidor
 
 				PingsPerPlayer: {
-					// Label: Maximum amount of pings per player
-                                        Label: Máximo de alertas por jogador
-					// Tooltip: Exceeding this limit will delete the oldest ping of that player
-                                        Tooltip: Exceder este limite vai apagar o alerta mais antigo desse jogador
+					Label: Máximo de alertas por jogador
+					Tooltip: Exceder este limite vai apagar o alerta mais antigo desse jogador
 				}
 
 				PingDuration: {
-					// Label: The lifetime/duration of a ping
-                                        Label: A duração/tempo de vida de um alerta
-					// Tooltip: In seconds. If max, infinite duration
-                                        Tooltip: Em segundos. Duração infinita no valor máximo.
+					Label: A duração/tempo de vida de um alerta
+					Tooltip: Em segundos. Duração infinita no valor máximo.
 				}
 
 				PingCooldown: {
-					// Label: Cooldown between pings
-                                        Label: Tempo entre alertas
-					// Tooltip: In seconds
-                                        Tooltip: Em segundos
+					Label: Tempo entre alertas
+					Tooltip: Em segundos
 				}
 			}
 		}
 
 		PingStatus: {
-			// PlayerNameUnknown: Unknown
-                        PlayerNameUnknown: Desconhecido
-			// PlayerRendezvous: "{0} Rendezvous"
-                        PlayerRendezvous: "Encontro de {0}"
+			PlayerNameUnknown: Desconhecido
+			PlayerRendezvous: Encontro de {0}
 		}
 
 		PingFeedback: {
-			// PingCD: Ping CD: {0}s
-			// RemovedPing: Removed Ping
-                        RemovedPing: Alerta Removido
-			// PingAnything: "{0} found '{1}'!"
-                        PingAnything: "{0} encontrou '{1}'!"
-			// PingPlayer: "{0} marked a rendezvous location!"
-                        PingPlayer: "{0} marcou uma localização de encontro!"
+			PingCD: Tempo de espera: {0}s
+			RemovedPing: Alerta Removido
+			PingAnything: "{0} encontrou '{1}'!"
+			PingPlayer: "{0} marcou uma localização de encontro!"
 		}
 	}
 }
